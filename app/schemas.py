@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from typing import List, Optional
+from datetime import datetime
 
 class ProductBase(BaseModel):
     name: str
@@ -40,6 +42,39 @@ class InventoryMovementCreate(InventoryMovementBase):
 
 class InventoryMovementResponse(InventoryMovementBase):
     id: int
+
+    class Config:
+        orm_mode = True
+
+class OrderItemBase(BaseModel):
+    product_id: int
+    quantity: int
+
+class OrderBase(BaseModel):
+    status: Optional[str] = None
+
+class OrderCreate(OrderBase):
+    pass 
+
+class OrderItemCreate(OrderItemBase):
+    pass 
+
+class OrderItemResponse(BaseModel):
+    id: int
+    product_id: int
+    quantity: int
+    price_at_moment: float
+
+    class Config:
+        orm_mode = True
+
+class OrderResponse(BaseModel):
+    id: int
+    status: str
+    total: float
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    items: List[OrderItemResponse] = []
 
     class Config:
         orm_mode = True
