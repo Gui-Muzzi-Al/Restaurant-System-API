@@ -57,7 +57,9 @@ class OrderCreate(OrderBase):
     pass 
 
 class OrderItemCreate(OrderItemBase):
-    pass 
+    product_id: int
+    quanti: int
+
 
 class OrderItemResponse(BaseModel):
     id: int
@@ -78,3 +80,7 @@ class OrderResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class OrderItemUpdate(BaseModel):
+    quantity: int
